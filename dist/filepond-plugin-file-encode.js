@@ -76,7 +76,7 @@
             var worker = createWorker(DataURIWorker);
 
             worker.post({ file: file }, function(data) {
-              root.ref.data.value = JSON.stringify({
+              var value = JSON.stringify({
                 id: item.id,
                 name: file.name,
                 type: file.type,
@@ -84,7 +84,14 @@
                 metadata: item.getMetadata(),
                 data: data
               });
-            });
+
+              root.ref.data.value = value;
+
+              view.element.dispatchEvent(
+                new CustomEvent('FilePond:encoded', {
+                  detail: value,
+                })
+              );
           })
           .catch(function(error) {
             console.error(error);
