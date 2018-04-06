@@ -76,18 +76,19 @@
             var worker = createWorker(DataURIWorker);
 
             worker.post({ file: file }, function(data) {
-              var value = JSON.stringify({
+              var value = {
                 id: item.id,
                 name: file.name,
                 type: file.type,
                 size: file.size,
                 metadata: item.getMetadata(),
                 data: data
-              });
+              };
 
-              root.ref.data.value = value;
+              root.ref.data.value = JSON.stringify(value);
 
-              view.element.dispatchEvent(
+              // TODO: dispatch event on root FilePond element instead of document
+              document.dispatchEvent(
                 new CustomEvent('FilePond:encoded', {
                   detail: value
                 })
