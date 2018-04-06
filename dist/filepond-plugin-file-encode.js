@@ -89,9 +89,10 @@
 
               view.element.dispatchEvent(
                 new CustomEvent('FilePond:encoded', {
-                  detail: value,
+                  detail: value
                 })
               );
+            });
           })
           .catch(function(error) {
             console.error(error);
